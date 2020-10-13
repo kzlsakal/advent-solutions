@@ -1,0 +1,13 @@
+{
+  "name": "challenge-jester",
+  "version": "1.0.0",
+  "description": "Used to test individual JS files with Jest and VS Code Debugger",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Doruk Gurleyen",
+  "license": "MIT",
+  "dependencies": {
+    "jest": "^26.5.3"
+  }
+}
