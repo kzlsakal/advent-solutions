@@ -1,27 +1,3 @@
-const solvePuzzlePart1 = (input) => {
-  input = input.split('\n\n');
-
-  input = input.map((pass) =>
-    pass
-      .replace(/(\n)+/g, ' ')
-      .split(' ')
-      .map((f) => f.split(':')[0])
-  );
-
-  const required = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'];
-  let validCount = 0;
-
-  input.forEach((pass) => {
-    const valid = !required.some((field) => !pass.includes(field));
-
-    if (valid) {
-      validCount += 1;
-    }
-  });
-
-  return validCount;
-};
-
 const solvePuzzle = (input) => {
   input = input.split('\n\n');
 
@@ -31,28 +7,31 @@ const solvePuzzle = (input) => {
       .split(' ')
       .map((f) => f.split(':'));
 
-    const o = {};
-    pass.forEach((f) => (o[f[0]] = f[1]));
+    const fields = {};
+    pass.forEach((f) => (fields[f[0]] = f[1]));
 
-    return o;
+    return fields;
   });
 
-  const required = {
+  const requirements = {
     byr: (f) => f.length === 4 && Number(f) >= 1920 && Number(f) <= 2002,
     iyr: (f) => f.length === 4 && Number(f) >= 2010 && Number(f) <= 2020,
     eyr: (f) => f.length === 4 && Number(f) >= 2020 && Number(f) <= 2030,
     hgt: (f) => {
-      if (f.length === 5 && f[3] === 'c' && f[4] === 'm') {
-        return Number(f.slice(0, 3)) >= 150 && Number(f.slice(0, 3)) <= 193;
+      const unit = f.slice(-2);
+      if (f.length === 5 && unit === 'cm') {
+        const num = Number(f.slice(0, 3));
+        return num >= 150 && num <= 193;
       }
-      if (f.length == 4 && f[2] === 'i' && f[3] === 'n') {
-        return Number(f.slice(0, 2)) >= 59 && Number(f.slice(0, 2)) <= 76;
+      if (f.length == 4 && unit === 'in') {
+        const num = Number(f.slice(0, 2));
+        return num >= 59 && num <= 76;
       }
       return false;
     },
     hcl: (f) => {
       if (f.length === 7 && f[0] === '#') {
-        return !f.slice(1).match(/[^a-zA-Z\d:]/);
+        return !/[^a-zA-Z\d:]/.test(f.slice(1));
       }
       return false;
     },
@@ -66,18 +45,31 @@ const solvePuzzle = (input) => {
   let validCount = 0;
 
   input.forEach((pass) => {
-    let valid = true;
-
-    for (let [key, func] of Object.entries(required)) {
-      if (!pass.hasOwnProperty(key)) {
-        valid = false;
-        return;
-      }
-      if (!func(pass[key])) {
-        valid = false;
-        return;
-      }
+    for (let [key, rule] of Object.entries(requirements)) {
+      if (!pass.hasOwnProperty(key)) return;
+      if (!rule(pass[key])) return;
     }
+    validCount += 1;
+  });
+
+  return validCount;
+};
+
+const solvePuzzlePart1 = (input) => {
+  input = input.split('\n\n');
+
+  input = input.map((pass) =>
+    pass
+      .replace(/(\n)+/g, ' ')
+      .split(' ')
+      .map((field) => field.split(':')[0])
+  );
+
+  const required = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'];
+  let validCount = 0;
+
+  input.forEach((pass) => {
+    const valid = !required.some((field) => !pass.includes(field));
 
     if (valid) {
       validCount += 1;
