@@ -1,22 +1,19 @@
 const solvePuzzlePart1 = (input) => {
   input = input.split('\n\n');
 
-  input = input.map((p) => {
-    p = p.replace(/(\n)+/g, ' ').split(' ');
-    p = p.map((f) => f.split(':')[0]);
-    return p;
-  });
+  input = input.map((pass) =>
+    pass
+      .replace(/(\n)+/g, ' ')
+      .split(' ')
+      .map((f) => f.split(':')[0])
+  );
 
   const required = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'];
   let validCount = 0;
 
   input.forEach((pass) => {
-    let valid = true;
-    required.forEach((field) => {
-      if (!pass.includes(field)) {
-        valid = false;
-      }
-    });
+    const valid = !required.some((field) => !pass.includes(field));
+
     if (valid) {
       validCount += 1;
     }
