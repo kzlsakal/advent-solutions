@@ -37,7 +37,7 @@ const solvePuzzle = (input) => {
       return i;
     }
   }
-  return seat;
+  return 'It turns out you do not have a seat. Please call customer service.';
 };
 
 const solvePuzzlePart1 = (input) => {
