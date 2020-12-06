@@ -1,4 +1,4 @@
-const makeAlphabet = () => new Set('abcdefghijklmnopqrstuvwxyz'.split(''));
+const makeAlphabet = () => new Set('abcdefghijklmnopqrstuvwxyz');
 
 const solvePuzzle = (input) => {
   input = input.split('\n\n');
