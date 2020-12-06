@@ -29,7 +29,7 @@ const solvePuzzle = (input) => {
   return count;
 };
 
-const solvePuzzlePart2 = (input) => {
+const solvePuzzlePart1 = (input) => {
   input = input.split('\n\n');
 
   let count = 0;
