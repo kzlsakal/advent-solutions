@@ -1,20 +1,13 @@
-const makeAlphabet = () => new Set('abcdefghijklmnopqrstuvwxyz');
-
 const solvePuzzle = (input) => {
   input = input.split('\n\n');
-  input = input.map((group) => group.split('\n'));
 
   let count = 0;
 
   input.forEach((group) => {
-    const groupAnswers = makeAlphabet();
+    const groupAnswers = new Set(group.replace(/\n/g, ''));
 
-    group.forEach((questions) => {
-      const individualAnswers = new Set();
-
-      for (let answer of questions) {
-        individualAnswers.add(answer);
-      }
+    group.split('\n').forEach((passenger) => {
+      const individualAnswers = new Set(passenger);
 
       for (let answer of groupAnswers) {
         if (!individualAnswers.has(answer)) {
@@ -34,10 +27,7 @@ const solvePuzzlePart1 = (input) => {
 
   let count = 0;
 
-  input = input.forEach(
-    (grp) =>
-      (count += new Set(grp.split('\n').reduce((acc, l) => (acc += l))).size)
-  );
+  input.forEach((group) => (count += new Set(group.replace(/\n/g, '')).size));
 
   return count;
 };
