@@ -19,44 +19,32 @@ const operate = (ops) => {
   return [i, acc];
 };
 
-const getTerminatedResult = (input, indexes, newOp) => {
-  for (let i = 0; i < indexes.length; i++) {
-    const oldValue = input[indexes[i]];
-    input[indexes[i]] = newOp + input[indexes[i]].slice(3);
-    const [lastIndex, acc] = operate(input);
+const getTerminatedResult = (input, idx, newOp) => {
+  const oldValue = input[idx];
+  input[idx] = newOp + input[idx].slice(3);
+  const [lastIndex, acc] = operate(input);
 
-    if (lastIndex >= input.length) {
-      return acc;
-    } else {
-      input[indexes[i]] = oldValue;
-    }
+  if (lastIndex >= input.length) {
+    return acc;
+  } else {
+    input[idx] = oldValue;
   }
-};
-
-const recordOps = (input) => {
-  const [jumps, nops] = [[], []];
-
-  for (let i = 0; i < input.length; i++) {
-    const [cmd] = input[i].split(' ');
-    if (cmd === 'nop') {
-      nops.push(i);
-    } else if (cmd === 'jmp') {
-      jumps.push(i);
-    }
-  }
-
-  return [jumps, nops];
 };
 
 const solvePuzzle = (input) => {
   input = input.split('\n');
-  const [jumps, nops] = recordOps(input);
 
-  const jumpResult = getTerminatedResult(input, jumps, 'nop');
-  if (jumpResult) return jumpResult;
+  for (let i = 0; i < input.length; i++) {
+    const cmd = input[i].slice(0, 3);
 
-  const nopResult = getTerminatedResult(input, nops, 'jmp');
-  if (nopResult) return nopResult;
+    if (cmd === 'jmp') {
+      const result = getTerminatedResult(input, i, 'nop');
+      if (result) return result;
+    } else if (cmd === 'nop') {
+      const result = getTerminatedResult(input, i, 'jmp');
+      if (result) return result;
+    }
+  }
 };
 
 const solvePuzzlePart1 = (input) => operate(input.split('\n'))[1];
