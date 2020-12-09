@@ -19,12 +19,12 @@ const findInvalidNum = (list) => {
   }
 };
 
-const getMinMaxSum = (list) => {
+const getMinMaxSum = (list, start, end) => {
   let [min, max] = [+Infinity, -Infinity];
 
-  for (let num of list) {
-    min = Math.min(min, num);
-    max = Math.max(max, num);
+  for (let i = start; i <= end; i++) {
+    min = Math.min(min, list[i]);
+    max = Math.max(max, list[i]);
   }
   return min + max;
 };
@@ -36,17 +36,19 @@ const solvePuzzle = (input) => {
 
   const invalidNum = findInvalidNum(input);
 
-  for (let i = 0; i < input.length - 1; i++) {
-    const nums = [input[i]];
-    let total = nums[0];
+  let [i, j] = [0, 1];
+  let total = input[i] + input[j];
 
-    for (let j = i + 1; j < input.length, total < invalidNum; j++) {
-      nums.push(input[j]);
+  while (j < input.length) {
+    if (total === invalidNum) {
+      return getMinMaxSum(input, i, j);
+    }
+    if (total > invalidNum) {
+      total -= input[i];
+      i += 1;
+    } else {
+      j += 1;
       total += input[j];
-
-      if (total === invalidNum) {
-        return getMinMaxSum(nums);
-      }
     }
   }
 };
