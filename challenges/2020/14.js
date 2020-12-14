@@ -28,9 +28,9 @@ const getFloating = (key) => {
 
   while (xCount) {
     const currentNums = [];
+    const xIdx = nums[0].indexOf('X');
 
     for (let num of nums) {
-      const xIdx = num.indexOf('X');
       const lower = num.slice(0, xIdx).concat('0', num.slice(xIdx + 1));
       const upper = num.slice(0, xIdx).concat('1', num.slice(xIdx + 1));
       currentNums.push(lower, upper);
