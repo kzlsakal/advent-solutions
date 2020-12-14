@@ -7,7 +7,7 @@ const getKeyVal = (cmd) => {
   return [key.slice(4, -1), val];
 };
 
-const unmaskBits = (cmd, mask, maskIdx, skipedChar) => {
+const unmaskBits = (cmd, mask, maskIdx, skippedChar) => {
   const keyVal = getKeyVal(cmd);
   keyVal[maskIdx] = Number(keyVal[maskIdx])
     .toString(2)
@@ -15,7 +15,7 @@ const unmaskBits = (cmd, mask, maskIdx, skipedChar) => {
     .split('');
 
   for (let i = mask.length - 1; i >= 0; i--) {
-    if (mask[i] !== skipedChar) {
+    if (mask[i] !== skippedChar) {
       keyVal[maskIdx][i] = mask[i];
     }
   }
