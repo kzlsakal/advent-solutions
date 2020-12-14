@@ -9,5 +9,8 @@
   "license": "MIT",
   "dependencies": {
     "jest": "^26.5.3"
+  },
+  "devDependencies": {
+    "eslint": "^7.15.0"
   }
 }
