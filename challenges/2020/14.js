@@ -7,8 +7,8 @@ const getKeyVal = (cmd) => {
   return [key.slice(4, -1), val];
 };
 
-const unmaskBits = (keyVal, mask, maskIdx, skipedChar) => {
-  keyVal = getKeyVal(keyVal);
+const unmaskBits = (cmd, mask, maskIdx, skipedChar) => {
+  const keyVal = getKeyVal(cmd);
   keyVal[maskIdx] = Number(keyVal[maskIdx])
     .toString(2)
     .padStart(36, '0')
