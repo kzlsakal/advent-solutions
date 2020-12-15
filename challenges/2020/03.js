@@ -26,6 +26,7 @@ const solvePuzzle = (input) => {
   return slopes.reduce((acc, slope) => acc * skiDown(input, ...slope), 1);
 };
 
+// eslint-disable-next-line no-undef
 test('Puzzle Result', (done) => {
   const fs = require('fs');
   const path = require('path');
@@ -39,5 +40,4 @@ test('Puzzle Result', (done) => {
     console.log('\x1b[1m\x1b[31m%s\x1b[0m', 'Result:', result);
     done();
   });
-  //expect(result).toEqual('test');
 });
