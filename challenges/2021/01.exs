@@ -28,5 +28,5 @@ defmodule Challenge do
   end
 end
 
-Utils.execute(&Challenge.first_result/1, __ENV__.file, "Q1")
-Utils.execute(&Challenge.second_result/1, __ENV__.file, "Q2")
+Utils.run(&Challenge.first_result/1, __ENV__.file, "Q1")
+Utils.run(&Challenge.second_result/1, __ENV__.file, "Q2")

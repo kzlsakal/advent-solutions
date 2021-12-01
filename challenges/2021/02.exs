@@ -3,6 +3,10 @@ Code.compile_file(Path.join([__ENV__.file], ["../../../utils/utils.exs"]))
 defmodule Challenge do
   @moduledoc false
 
+  def input do
+    Utils.load_input(__ENV__.file)
+  end
+
   def first_result(input) do
     input
   end
