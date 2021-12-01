@@ -1,14 +1,10 @@
-Code.compile_file("./utils/utils.exs")
+Code.compile_file(Path.join([__ENV__.file], ["../../../utils/utils.exs"]))
 
 defmodule Challenge do
   @moduledoc false
 
-  def input do
-    Utils.load_input(__ENV__.file)
-  end
-
-  def first_result do
-    input()
+  def first_result(input) do
+    input
     |> Enum.reduce([0, nil], fn val, [sum, prev] ->
       val = String.to_integer(val)
 
@@ -17,8 +13,8 @@ defmodule Challenge do
     |> List.first()
   end
 
-  def second_result do
-    input()
+  def second_result(input) do
+    input
     |> Enum.reduce([0, nil, nil, nil], fn val, [sum, prev3, prev2, prev1] = acc ->
       val = String.to_integer(val)
 
@@ -32,5 +28,5 @@ defmodule Challenge do
   end
 end
 
-IO.inspect(Challenge.first_result(), label: "Q1")
-IO.inspect(Challenge.second_result(), label: "Q2")
+Utils.execute(&Challenge.first_result/1, __ENV__.file, "Q1")
+Utils.execute(&Challenge.second_result/1, __ENV__.file, "Q2")
